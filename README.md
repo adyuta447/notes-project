@@ -2,6 +2,45 @@
 
 **Stellar Notes DApp** - Blockchain-Based Decentralized Note-Taking System
 
+This repository contains both the Soroban smart contract and a browser dapp
+with a real [Freighter](https://www.freighter.app/) wallet connection.
+
+## Wallet Integration
+
+The frontend uses `@stellar/freighter-api` and `@stellar/stellar-sdk` to:
+
+- detect whether the Freighter browser extension is installed (`isConnected`)
+- request explicit dapp permission (`setAllowed`)
+- retrieve the selected public address (`getAddress`)
+- verify that Freighter is connected to Stellar Testnet (`getNetworkDetails`)
+- build, prepare, and sign a Soroban transaction (`signTransaction`)
+- submit the signed transaction through Stellar RPC
+
+No secret key is requested or stored by this application. The user reviews and
+approves every signature inside Freighter.
+
+## Run the DApp
+
+Requirements: Node.js 20.19+ and the Freighter browser extension configured for
+Stellar Testnet.
+
+```bash
+yarn install
+cp .env.example .env
+yarn dev
+```
+
+Open the local URL printed by Vite, click **Connect wallet**, approve the
+permission in Freighter, then create a note and approve the transaction.
+
+The default contract ID and RPC endpoint are included in `.env.example`. They
+can be replaced after redeploying the contract:
+
+```env
+VITE_CONTRACT_ID=YOUR_DEPLOYED_CONTRACT_ID
+VITE_RPC_URL=https://soroban-testnet.stellar.org
+```
+
 ## Project Description
 
 Stellar Notes DApp is a decentralized smart contract solution built on the Stellar blockchain using Soroban SDK. It provides a secure, immutable platform for managing personal notes directly on the blockchain. The contract ensures that your data is stored transparently and is only manageable through predefined smart contract functions, eliminating reliance on centralized database providers.
