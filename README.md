@@ -5,6 +5,37 @@
 This repository contains both the Soroban smart contract and a browser dapp
 with a real [Freighter](https://www.freighter.app/) wallet connection.
 
+## Live Demo
+
+The application is deployed on Vercel:
+
+**https://notes-project-one.vercel.app/**
+
+> Use Freighter on Stellar Testnet. Testnet XLM has no real-world monetary
+> value.
+
+## Screenshots
+
+### Connected DApp and Transaction Result
+
+The connected wallet can authorize a note transaction, and the resulting
+transaction confirmation is displayed directly in the application.
+
+![Connected Stellar Notes dapp with transaction result](docs/wallet-connected.png)
+
+### Connected Freighter Account
+
+The application is connected to the selected Freighter Testnet account.
+
+![Connected Freighter Testnet account](docs/balance-displayed.png)
+
+### Successful Soroban Testnet Transaction
+
+Freighter reports the submitted smart-contract invocation as successful and
+provides a link to Stellar Expert.
+
+![Successful Soroban transaction on Stellar Testnet](docs/xlm-transaction-success.png)
+
 ## Wallet Integration
 
 The frontend uses `@stellar/freighter-api` and `@stellar/stellar-sdk` to:
