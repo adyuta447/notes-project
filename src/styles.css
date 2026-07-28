@@ -52,6 +52,26 @@ button { cursor: pointer; }
   color: var(--lime);
 }
 
+.wallet-area { display: flex; align-items: center; gap: 12px; }
+
+.balance-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  padding: 9px 15px;
+  font-size: 12px;
+  color: #d2d4cd;
+}
+.balance-chip[hidden] { display: none; }
+.balance-label {
+  font-family: "DM Mono", monospace;
+  letter-spacing: .12em;
+  font-size: 10px;
+  color: var(--muted);
+}
+
 .wallet-button {
   min-width: 170px;
   border: 1px solid #494c45;
@@ -66,7 +86,8 @@ button { cursor: pointer; }
 }
 
 .wallet-button:hover { border-color: var(--lime); }
-.wallet-button:disabled { cursor: wait; opacity: .65; }
+.wallet-button:disabled:not(.connected) { cursor: wait; opacity: .65; }
+.wallet-button.connected { cursor: default; }
 .wallet-dot {
   width: 7px;
   height: 7px;
@@ -77,6 +98,17 @@ button { cursor: pointer; }
   background: var(--lime);
   box-shadow: 0 0 10px rgba(215,255,99,.7);
 }
+
+.disconnect-button {
+  border: 0;
+  background: transparent;
+  color: #ff9b89;
+  padding: 8px 4px;
+  font-size: 12px;
+}
+.disconnect-button:hover { color: #ff7961; text-decoration: underline; }
+.disconnect-button[hidden] { display: none; }
+.disconnect-button:disabled { opacity: .5; cursor: wait; }
 
 main {
   width: min(1180px, calc(100% - 48px));
@@ -137,6 +169,7 @@ h1 em {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr);
 }
+.workspace + .workspace { border-top: 0; }
 
 .panel { padding: 54px 7vw 64px 0; border-right: 1px solid var(--line); }
 .panel-heading { display: flex; align-items: flex-start; justify-content: space-between; }
@@ -180,6 +213,7 @@ textarea { min-height: 155px; resize: vertical; line-height: 1.6; }
 .status.info { color: #d2d4cd; border-color: #8c8f87; background: #191a17; }
 .status.success { color: var(--lime); border-color: var(--lime); background: rgba(215,255,99,.05); }
 .status.error { color: #ff9b89; border-color: #ff7961; background: rgba(255,121,97,.05); }
+.status a { color: inherit; text-decoration: underline; }
 
 aside { padding: 58px 0 64px 6vw; display: flex; flex-direction: column; }
 .steps { padding: 0; margin: 26px 0 45px; list-style: none; }
@@ -201,7 +235,8 @@ footer {
 }
 
 @media (max-width: 760px) {
-  .nav { padding: 0 20px; }
+  .nav { padding: 14px 20px; height: auto; flex-wrap: wrap; row-gap: 10px; }
+  .wallet-area { flex-wrap: wrap; gap: 8px; }
   .wallet-button { min-width: auto; }
   .hero { padding-top: 70px; }
   .workspace { grid-template-columns: 1fr; }

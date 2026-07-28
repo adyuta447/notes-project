@@ -16,25 +16,28 @@ The application is deployed on Vercel:
 
 ## Screenshots
 
-### Connected DApp and Transaction Result
+### Wallet Connected with Balance Displayed
 
-The connected wallet can authorize a note transaction, and the resulting
-transaction confirmation is displayed directly in the application.
+The header shows the connected Freighter Testnet account, a **Disconnect**
+control, and the account's live XLM balance fetched from Horizon.
 
-![Connected Stellar Notes dapp with transaction result](docs/wallet-connected.png)
+![Connected wallet with XLM balance displayed](docs/wallet-connected.png)
 
-### Connected Freighter Account
+![Balance chip showing the account's live XLM balance](docs/balance-displayed.png)
 
-The application is connected to the selected Freighter Testnet account.
+### Successful Testnet Transaction
 
-![Connected Freighter Testnet account](docs/balance-displayed.png)
+After signing in Freighter, the app reports the payment as successful and
+shows the transaction hash with a direct link to Stellar Expert.
 
-### Successful Soroban Testnet Transaction
+![Successful XLM payment on Stellar Testnet](docs/xlm-transaction-success.png)
 
-Freighter reports the submitted smart-contract invocation as successful and
-provides a link to Stellar Expert.
+### On-Chain Confirmation
 
-![Successful Soroban transaction on Stellar Testnet](docs/xlm-transaction-success.png)
+The linked Stellar Expert page independently confirms the same transaction
+succeeded on Testnet.
+
+![Stellar Expert confirming the transaction succeeded](docs/xlm-transaction-onchain.png)
 
 ## Wallet Integration
 
@@ -44,11 +47,30 @@ The frontend uses `@stellar/freighter-api` and `@stellar/stellar-sdk` to:
 - request explicit dapp permission (`setAllowed`)
 - retrieve the selected public address (`getAddress`)
 - verify that Freighter is connected to Stellar Testnet (`getNetworkDetails`)
+- fetch the connected account's native XLM balance from Horizon
+  (`Horizon.Server.loadAccount`), shown in the header
 - build, prepare, and sign a Soroban transaction (`signTransaction`)
-- submit the signed transaction through Stellar RPC
+- build and sign a classic `Operation.payment` to send native XLM to any
+  address
+- submit signed transactions through Stellar RPC and poll until they confirm
+- disconnect the wallet from the dapp's own session (Freighter has no
+  programmatic revoke API — full revocation happens inside the extension)
 
 No secret key is requested or stored by this application. The user reviews and
 approves every signature inside Freighter.
+
+## Features
+
+- **Connect / disconnect** — connect Freighter, or disconnect to clear the
+  dapp session (the header falls back to "Connect wallet").
+- **Balance** — the connected account's XLM balance is fetched and shown next
+  to the wallet address, and refreshes after every transaction.
+- **Send XLM** — a dedicated "Send XLM" panel builds a native payment
+  operation, sends it to any Testnet address, and reports success/failure
+  with the transaction hash and a Stellar Expert link.
+- **Notes on Soroban** — the original note-taking flow (`create_note`) is
+  still available as a separate panel, demonstrating a smart-contract
+  invocation alongside the classic payment.
 
 ## Run the DApp
 
@@ -70,6 +92,7 @@ can be replaced after redeploying the contract:
 ```env
 VITE_CONTRACT_ID=YOUR_DEPLOYED_CONTRACT_ID
 VITE_RPC_URL=https://soroban-testnet.stellar.org
+VITE_HORIZON_URL=https://horizon-testnet.stellar.org
 ```
 
 ## Project Description
@@ -130,7 +153,6 @@ We envision a future where digital information is truly personal and sovereign, 
 ## Contract Details
 
 - Contract Address: CBLU4IUASQ4WUMOXBFLZRSBBLILGOH33GS4LUPKFBCCCMJCDQNMF7G2M
-  (Screenshot has been removed)
 
 ## Future Scope
 
