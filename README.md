@@ -1,6 +1,7 @@
 # Stellar Notes DApp
 
-**Stellar Notes DApp** - Blockchain-Based Decentralized Note-Taking System
+**Stellar Notes DApp** 
+Blockchain-Based Decentralized Note-Taking System
 
 This repository contains both the Soroban smart contract and a browser dapp
 with a real [Freighter](https://www.freighter.app/) wallet connection.
